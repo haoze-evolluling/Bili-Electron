@@ -8,7 +8,7 @@ let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1300,
-    height: 720,
+    height: 750,
     title: 'Bili-Electron',
     icon: path.join(__dirname, 'logo', 'bilibili_icon_198297.png'),
     autoHideMenuBar: true,
