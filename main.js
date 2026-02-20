@@ -28,6 +28,21 @@ function createWindow() {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
   });
 
+  // 页面加载完成后注入 CSS 隐藏滚动条
+  mainWindow.webContents.on('dom-ready', () => {
+    mainWindow.webContents.insertCSS(`
+      ::-webkit-scrollbar {
+        width: 0px !important;
+        height: 0px !important;
+        display: none !important;
+      }
+      body {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+    `);
+  });
+
   // 窗口准备好后显示
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
