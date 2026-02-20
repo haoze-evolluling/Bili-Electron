@@ -71,12 +71,33 @@ function createWindow() {
     return { action: 'deny' };
   });
 
-  // 处理新窗口创建，使其与原窗口保持相同尺寸和位置
-  mainWindow.webContents.on('did-create-window', (newWindow) => {
+  // 处理新窗口创建，使其与原窗口保持相同特性和尺寸
+  mainWindow.webContents.on('did-create-window', (newWindow, frameName, disposition, options) => {
     const [width, height] = mainWindow.getSize();
     const [x, y] = mainWindow.getPosition();
+    
+    // 设置窗口尺寸和位置
     newWindow.setSize(width, height);
     newWindow.setPosition(x, y);
+    
+    // 隐藏菜单栏
+    newWindow.setMenuBarVisibility(false);
+    newWindow.setAutoHideMenuBar(true);
+    
+    // 页面加载完成后注入 CSS 隐藏滚动条
+    newWindow.webContents.on('dom-ready', () => {
+      newWindow.webContents.insertCSS(`
+        ::-webkit-scrollbar {
+          width: 0px !important;
+          height: 0px !important;
+          display: none !important;
+        }
+        body {
+          scrollbar-width: none !important;
+          -ms-overflow-style: none !important;
+        }
+      `);
+    });
   });
 
   // 拦截导航请求
