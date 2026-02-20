@@ -51,7 +51,6 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Bili-Electron",
-      "include": "installer.nsh",
       "artifactName": "${productName}-${version}-setup.${ext}"
     },
     "mac": {
