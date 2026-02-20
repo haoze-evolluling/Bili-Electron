@@ -8,6 +8,8 @@
     "dev": "electron . --dev",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
+    "build:win:user": "electron-builder --win --config.nsis.perMachine=false --config.nsis.artifactName='${productName}-${version}-user-setup.${ext}'",
+    "build:win:admin": "electron-builder --win --config.nsis.perMachine=true --config.nsis.artifactName='${productName}-${version}-admin-setup.${ext}'",
     "build:mac": "electron-builder --mac",
     "build:linux": "electron-builder --linux"
   },
@@ -34,8 +36,23 @@
       "logo/**/*"
     ],
     "win": {
-      "target": "nsis",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
       "icon": "logo/bilibili_icon_198297.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Bili-Electron",
+      "include": "installer.nsh",
+      "artifactName": "${productName}-${version}-setup.${ext}"
     },
     "mac": {
       "target": "dmg",
