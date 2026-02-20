@@ -24,7 +24,7 @@
   },
   "build": {
     "appId": "com.example.bili-electron",
-    "productName": "BiliBili",
+    "productName": "Bili-Electron",
     "directories": {
       "output": "dist"
     },

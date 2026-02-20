@@ -9,7 +9,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1300,
     height: 720,
-    title: '哔哩哔哩 (゜-゜)つロ 干杯~',
+    title: 'Bili-Electron',
     icon: path.join(__dirname, 'assets', 'icon.png'),
     autoHideMenuBar: true,
     webPreferences: {
