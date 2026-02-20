@@ -249,13 +249,47 @@ npm run dev</code></pre>
                 <pre><code># 打包 Windows 版本（默认 NSIS 安装包）
 npm run build:win
 
+# 用户模式安装包（无需管理员权限）
+npm run build:win:user
+
+# 管理员模式安装包（需要管理员权限）
+npm run build:win:admin
+
 # 或使用通用打包命令
 npm run build</code></pre>
             </div>
             <p>打包完成后，安装包位于 <code>dist/</code> 目录下：</p>
             <ul>
-                <li><code>BiliBili Setup x.x.x.exe</code> - Windows 安装程序</li>
+                <li><code>Bili-Electron-x.x.x-user-setup.exe</code> - 用户模式安装程序（无需管理员权限）</li>
+                <li><code>Bili-Electron-x.x.x-admin-setup.exe</code> - 管理员模式安装程序（需要管理员权限）</li>
             </ul>
+
+            <h3>Windows 安装模式说明</h3>
+            <table style="width:100%; border-collapse: collapse; margin: 16px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">安装模式</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">安装路径</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">权限要求</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">适用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">用户模式</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>%LOCALAPPDATA%\Bili-Electron</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">无需管理员</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">个人电脑、无管理员权限</td>
+                    </tr>
+                    <tr style="background: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd;">管理员模式</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>C:\Program Files\Bili-Electron</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">需要管理员</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">多用户共享、企业环境</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>命令行参数：</strong>管理员模式安装包支持 <code>/ALLUSERS</code> 参数强制以管理员模式安装。</p>
 
             <h3>macOS 应用程序 (.app / .dmg)</h3>
             <div class="code-block">
@@ -286,6 +320,7 @@ npm run build</code></pre>
                 <div class="tree-line"><span class="tree-indent">├── </span>main.js <span class="tree-indent"># Electron 主进程</span></div>
                 <div class="tree-line"><span class="tree-indent">├── </span>preload.js <span class="tree-indent"># 预加载脚本</span></div>
                 <div class="tree-line"><span class="tree-indent">├── </span>package.json <span class="tree-indent"># 项目配置</span></div>
+                <div class="tree-line"><span class="tree-indent">├── </span>installer.nsh <span class="tree-indent"># Windows 安装脚本（NSIS）</span></div>
                 <div class="tree-line"><span class="tree-indent">├── </span>.gitignore <span class="tree-indent"># Git 忽略规则</span></div>
                 <div class="tree-line"><span class="tree-indent">└── </span>dist/ <span class="tree-indent"># 打包输出目录（自动生成）</span></div>
             </div>
