@@ -10,7 +10,7 @@ function createWindow() {
     width: 1300,
     height: 720,
     title: 'Bili-Electron',
-    icon: path.join(__dirname, 'assets', 'icon.png'),
+    icon: path.join(__dirname, 'logo', 'bilibili_icon_198297.png'),
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,

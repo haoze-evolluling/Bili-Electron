@@ -31,19 +31,19 @@
     "files": [
       "main.js",
       "preload.js",
-      "assets/**/*"
+      "logo/**/*"
     ],
     "win": {
       "target": "nsis",
-      "icon": "assets/icon.ico"
+      "icon": "logo/bilibili_icon_198297.png"
     },
     "mac": {
       "target": "dmg",
-      "icon": "assets/icon.icns"
+      "icon": "logo/bilibili_icon_198297.png"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "assets/icon.png"
+      "icon": "logo/bilibili_icon_198297.png"
     }
   }
 }
