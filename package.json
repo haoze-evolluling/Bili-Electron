@@ -1,6 +1,6 @@
 {
   "name": "bili-electron",
-  "version": "1.0.0",
+  "version": "2026.02",
   "description": "B站 Electron 客户端",
   "main": "main.js",
   "scripts": {

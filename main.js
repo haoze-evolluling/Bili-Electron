@@ -7,12 +7,11 @@ let mainWindow;
 // 创建主窗口
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1600,
-    height: 900,
-    minWidth: 1200,
-    minHeight: 700,
+    width: 1300,
+    height: 720,
     title: '哔哩哔哩 (゜-゜)つロ 干杯~',
     icon: path.join(__dirname, 'assets', 'icon.png'),
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -55,6 +54,14 @@ function createWindow() {
     // 外部链接在系统默认浏览器打开
     shell.openExternal(url);
     return { action: 'deny' };
+  });
+
+  // 处理新窗口创建，使其与原窗口保持相同尺寸和位置
+  mainWindow.webContents.on('did-create-window', (newWindow) => {
+    const [width, height] = mainWindow.getSize();
+    const [x, y] = mainWindow.getPosition();
+    newWindow.setSize(width, height);
+    newWindow.setPosition(x, y);
   });
 
   // 拦截导航请求
