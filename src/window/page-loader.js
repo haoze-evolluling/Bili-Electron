@@ -48,13 +48,19 @@ class PageLoader {
     });
   }
 
-  setupWindowEvents(parentWindow = null) {
-    if (parentWindow) {
-      const [width, height] = parentWindow.getSize();
-      const [x, y] = parentWindow.getPosition();
-      this.window.setSize(width, height);
-      this.window.setPosition(x, y);
-    }
+  setupWindowEvents() {
+    this.window.setMenuBarVisibility(false);
+    this.window.setAutoHideMenuBar(true);
+
+    this.handleWindowOpen();
+    this.handleNavigation();
+  }
+
+  setupNewWindow(parentWindow) {
+    const [width, height] = parentWindow.getSize();
+    const [x, y] = parentWindow.getPosition();
+    this.window.setSize(width, height);
+    this.window.setPosition(x, y);
 
     this.window.setMenuBarVisibility(false);
     this.window.setAutoHideMenuBar(true);

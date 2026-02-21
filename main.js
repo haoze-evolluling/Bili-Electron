@@ -4,15 +4,6 @@ const PageLoader = require('./src/window/page-loader');
 
 let mainWindow;
 
-function configureWindow(window, parentWindow = null) {
-  const pageLoader = new PageLoader(window);
-  pageLoader.setupWindowEvents(parentWindow);
-
-  window.webContents.on('did-create-window', (newWindow) => {
-    configureWindow(newWindow, window);
-  });
-}
-
 function createWindow() {
   mainWindow = new BrowserWindow(WindowConfig.mainWindowOptions);
 
@@ -20,10 +11,6 @@ function createWindow() {
   pageLoader.loadBilibiliHomepage();
   pageLoader.setupWindowEvents();
   pageLoader.showWhenReady();
-
-  mainWindow.webContents.on('did-create-window', (newWindow) => {
-    configureWindow(newWindow, mainWindow);
-  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
