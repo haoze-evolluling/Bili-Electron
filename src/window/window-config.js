@@ -22,13 +22,25 @@ const WindowConfig = {
 
   scrollBarCSS: `
     ::-webkit-scrollbar {
-      width: 0px !important;
+      width: 8px !important;
       height: 0px !important;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(128, 128, 128, 0.4) !important;
+      border-radius: 4px !important;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(128, 128, 128, 0.6) !important;
+    }
+    ::-webkit-scrollbar-horizontal {
       display: none !important;
     }
     body {
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
+      scrollbar-width: thin !important;
+      scrollbar-color: rgba(128, 128, 128, 0.4) transparent !important;
     }
   `,
 
