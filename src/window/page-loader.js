@@ -1,4 +1,4 @@
-const { shell } = require('electron');
+const { shell, BrowserWindow } = require('electron');
 const WindowConfig = require('./window-config');
 
 class PageLoader {
@@ -15,9 +15,23 @@ class PageLoader {
   handleWindowOpen() {
     this.window.webContents.setWindowOpenHandler(({ url }) => {
       if (WindowConfig.isInternalUrl(url)) {
-        return { action: 'allow' };
+        const newWindow = new BrowserWindow({
+          ...WindowConfig.mainWindowOptions,
+          parent: this.window,
+          show: false
+        });
+
+        newWindow.loadURL(url, {
+          userAgent: WindowConfig.userAgent
+        });
+
+        const pageLoader = new PageLoader(newWindow);
+        pageLoader.setupNewWindow(this.window);
+        pageLoader.showWhenReady();
+
+        return { action: 'deny' };
       }
-      
+
       shell.openExternal(url);
       return { action: 'deny' };
     });
