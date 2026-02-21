@@ -20,30 +20,6 @@ const WindowConfig = {
 
   userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
 
-  scrollBarCSS: `
-    ::-webkit-scrollbar {
-      width: 8px !important;
-      height: 0px !important;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent !important;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(128, 128, 128, 0.4) !important;
-      border-radius: 4px !important;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(128, 128, 128, 0.6) !important;
-    }
-    ::-webkit-scrollbar-horizontal {
-      display: none !important;
-    }
-    body {
-      scrollbar-width: thin !important;
-      scrollbar-color: rgba(128, 128, 128, 0.4) transparent !important;
-    }
-  `,
-
   isInternalUrl(url) {
     return url.includes('bilibili');
   }

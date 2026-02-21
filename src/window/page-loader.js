@@ -12,12 +12,6 @@ class PageLoader {
     });
   }
 
-  injectScrollBarCSS() {
-    this.window.webContents.on('dom-ready', () => {
-      this.window.webContents.insertCSS(WindowConfig.scrollBarCSS);
-    });
-  }
-
   handleWindowOpen() {
     this.window.webContents.setWindowOpenHandler(({ url }) => {
       if (WindowConfig.isInternalUrl(url)) {
@@ -51,7 +45,6 @@ class PageLoader {
     this.window.setMenuBarVisibility(false);
     this.window.setAutoHideMenuBar(true);
 
-    this.injectScrollBarCSS();
     this.handleWindowOpen();
     this.handleNavigation();
   }
