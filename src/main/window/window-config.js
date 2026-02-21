@@ -3,7 +3,7 @@ const path = require('path');
 
 const WindowConfig = {
   mainWindowOptions: {
-    width: 1250,
+    width: 1350,
     height: 780,
     title: 'Bili-Electron',
     icon: path.join(__dirname, '..', '..', '..', 'logo', 'bilibili_icon_198297.png'),
