@@ -1,11 +1,12 @@
-// 窗口配置管理，定义窗口选项和用户代理
+// 窗口配置管理，定义窗口选项
 const path = require('path');
+const CONSTANTS = require('../../common/constants');
 
 const WindowConfig = {
   mainWindowOptions: {
     width: 1350,
     height: 780,
-    title: 'Bili-Electron',
+    title: CONSTANTS.APP_NAME,
     icon: path.join(__dirname, '..', '..', '..', 'logo', 'bilibili_icon_198297.png'),
     autoHideMenuBar: true,
     webPreferences: {
@@ -16,10 +17,10 @@ const WindowConfig = {
       allowRunningInsecureContent: false
     },
     show: false,
-    backgroundColor: '#ffffff'
+    backgroundColor: CONSTANTS.WINDOW.BACKGROUND_COLOR
   },
 
-  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  userAgent: CONSTANTS.USER_AGENT,
 
   isInternalUrl(url) {
     return url.includes('bilibili');
