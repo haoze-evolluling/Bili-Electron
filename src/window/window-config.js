@@ -32,19 +32,8 @@ const WindowConfig = {
     }
   `,
 
-  allowedInternalDomains: [
-    'https://www.bilibili.com',
-    'https://space.bilibili.com',
-    'https://t.bilibili.com',
-    'https://live.bilibili.com',
-    'https://passport.bilibili.com',
-    'https://message.bilibili.com',
-    'https://member.bilibili.com',
-    'https://pay.bilibili.com'
-  ],
-
   isInternalUrl(url) {
-    return this.allowedInternalDomains.some(domain => url.startsWith(domain));
+    return url.includes('bilibili');
   }
 };
 
