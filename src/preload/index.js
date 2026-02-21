@@ -1,3 +1,4 @@
+// 预加载脚本，注入自定义样式并暴露安全的API给渲染进程
 const { contextBridge, ipcRenderer, webFrame } = require('electron');
 
 const scrollBarCSS = `

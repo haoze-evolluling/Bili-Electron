@@ -1,3 +1,4 @@
+// 页面加载管理器，处理窗口导航和新窗口打开
 const { shell, BrowserWindow } = require('electron');
 const WindowConfig = require('./window-config');
 

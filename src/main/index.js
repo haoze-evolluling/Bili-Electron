@@ -1,3 +1,4 @@
+// 主进程入口，负责应用生命周期管理和窗口创建
 const { app, BrowserWindow, session } = require('electron');
 const WindowConfig = require('./window/window-config');
 const PageLoader = require('./window/page-loader');

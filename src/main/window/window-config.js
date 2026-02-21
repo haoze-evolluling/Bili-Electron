@@ -1,3 +1,4 @@
+// 窗口配置管理，定义窗口选项和用户代理
 const path = require('path');
 
 const WindowConfig = {

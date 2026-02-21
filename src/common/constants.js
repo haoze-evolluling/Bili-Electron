@@ -1,3 +1,4 @@
+// 应用常量配置
 const CONSTANTS = {
   APP_NAME: 'Bili-Electron',
   
