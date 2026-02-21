@@ -4,9 +4,9 @@ const CONSTANTS = {
   
   WINDOW: {
     DEFAULT_WIDTH: 1300,
-    DEFAULT_HEIGHT: 750,
-    MIN_WIDTH: 800,
-    MIN_HEIGHT: 600,
+    DEFAULT_HEIGHT: 800,
+    MIN_WIDTH: 1300,
+    MIN_HEIGHT: 800,
     BACKGROUND_COLOR: '#ffffff'
   },
   
