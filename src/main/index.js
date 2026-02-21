@@ -4,6 +4,9 @@ const CONSTANTS = require('../common/constants');
 const WindowConfig = require('./window/window-config');
 const PageLoader = require('./window/page-loader');
 
+// 配置 DNS over HTTPS (DoH)
+app.commandLine.appendSwitch('dns-over-https', 'https://223.5.5.5/dns-query');
+
 let mainWindow;
 
 function createWindow() {
