@@ -3,8 +3,8 @@ const path = require('path');
 
 const WindowConfig = {
   mainWindowOptions: {
-    width: 1300,
-    height: 750,
+    width: 1250,
+    height: 780,
     title: 'Bili-Electron',
     icon: path.join(__dirname, '..', '..', '..', 'logo', 'bilibili_icon_198297.png'),
     autoHideMenuBar: true,
