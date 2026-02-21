@@ -2,7 +2,7 @@
   "name": "bili-electron",
   "version": "2026.2.0",
   "description": "B站 Electron 客户端",
-  "main": "main.js",
+  "main": "src/main/index.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
@@ -31,8 +31,7 @@
       "output": "dist"
     },
     "files": [
-      "main.js",
-      "preload.js",
+      "src/**/*",
       "logo/**/*"
     ],
     "win": {
@@ -49,16 +48,14 @@
       "allowToChangeInstallationDirectory": true,
       "perMachine": false,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "Bili-Electron",
-      "artifactName": "${productName}-${version}-setup.${ext}"
+      "createStartMenuShortcut": true
     },
     "mac": {
-      "target": "dmg",
+      "target": ["dmg"],
       "icon": "logo/bilibili_icon_198297.png"
     },
     "linux": {
-      "target": "AppImage",
+      "target": ["AppImage"],
       "icon": "logo/bilibili_icon_198297.png"
     }
   }

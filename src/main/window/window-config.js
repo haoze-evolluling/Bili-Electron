@@ -5,12 +5,12 @@ const WindowConfig = {
     width: 1300,
     height: 750,
     title: 'Bili-Electron',
-    icon: path.join(__dirname, '..', '..', 'logo', 'bilibili_icon_198297.png'),
+    icon: path.join(__dirname, '..', '..', '..', 'logo', 'bilibili_icon_198297.png'),
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, '..', '..', 'preload.js'),
+      preload: path.join(__dirname, '..', '..', 'preload', 'index.js'),
       webSecurity: true,
       allowRunningInsecureContent: false
     },
