@@ -4,8 +4,8 @@ const CONSTANTS = require('../../common/constants');
 
 const WindowConfig = {
   mainWindowOptions: {
-    width: 1350,
-    height: 780,
+    width: CONSTANTS.WINDOW.DEFAULT_WIDTH,
+    height: CONSTANTS.WINDOW.DEFAULT_HEIGHT,
     title: CONSTANTS.APP_NAME,
     icon: path.join(__dirname, '..', '..', '..', 'logo', 'bilibili_icon_198297.png'),
     autoHideMenuBar: true,
@@ -23,7 +23,7 @@ const WindowConfig = {
   userAgent: CONSTANTS.USER_AGENT,
 
   isInternalUrl(url) {
-    return url.includes('bilibili');
+    return url.includes(CONSTANTS.URLS.BILIBILI_DOMAIN);
   }
 };
 

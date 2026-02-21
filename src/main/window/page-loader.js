@@ -1,5 +1,6 @@
 // 页面加载管理器，处理窗口导航和新窗口打开
 const { shell, BrowserWindow } = require('electron');
+const CONSTANTS = require('../../common/constants');
 const WindowConfig = require('./window-config');
 
 class PageLoader {
@@ -8,7 +9,7 @@ class PageLoader {
   }
 
   loadBilibiliHomepage() {
-    this.window.loadURL('https://www.bilibili.com', {
+    this.window.loadURL(CONSTANTS.URLS.BILIBILI_HOME, {
       userAgent: WindowConfig.userAgent
     });
   }

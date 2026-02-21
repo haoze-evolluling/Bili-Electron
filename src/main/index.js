@@ -1,5 +1,6 @@
 // 主进程入口，负责应用生命周期管理和窗口创建
 const { app, BrowserWindow, session } = require('electron');
+const CONSTANTS = require('../common/constants');
 const WindowConfig = require('./window/window-config');
 const PageLoader = require('./window/page-loader');
 
@@ -19,11 +20,11 @@ function createWindow() {
 }
 
 function setupRequestHeaders() {
-  const filter = { urls: ['*://*.bilibili.com/*'] };
+  const filter = { urls: [`*://*.${CONSTANTS.URLS.BILIBILI_DOMAIN}/*`] };
   
   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
-    details.requestHeaders['Accept-Language'] = 'zh-CN,zh;q=0.9,en;q=0.8';
-    details.requestHeaders['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8';
+    details.requestHeaders['Accept-Language'] = CONSTANTS.HEADERS.ACCEPT_LANGUAGE;
+    details.requestHeaders['Accept'] = CONSTANTS.HEADERS.ACCEPT;
     callback({ requestHeaders: details.requestHeaders });
   });
 }
