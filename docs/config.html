@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境配置文档 - Bili-Electron</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-light: #e8e8e8;
+            --border-medium: #d0d0d0;
+            --accent: #333333;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .config-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .config-item {
+            display: flex;
+            flex-direction: column;
+            padding: 16px 20px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            transition: all 0.2s ease;
+        }
+
+        .config-item:hover {
+            border-color: var(--border-medium);
+            transform: translateX(4px);
+        }
+
+        .config-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .config-name {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+        }
+
+        .config-type {
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--bg-secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+        }
+
+        .config-value {
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            word-break: break-all;
+            margin-top: 4px;
+        }
+
+        .config-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #e8e8e8;
+            padding: 20px 24px;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 16px;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .key {
+            color: #9cdcfe;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .code-block .number {
+            color: #b5cea8;
+        }
+
+        .code-block .boolean {
+            color: #569cd6;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-list li:first-child {
+            padding-top: 0;
+        }
+
+        .info-label {
+            min-width: 100px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .tag.primary {
+            background: var(--text-primary);
+            color: var(--bg-secondary);
+            border-color: var(--text-primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 16px;
+            }
+
+            .section {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .config-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="../logo/bilibili_icon_198297.svg" alt="Logo" class="logo">
+            <h1>Bili-Electron</h1>
+            <p class="subtitle">环境配置文档</p>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">📦</span>
+                项目信息
+            </h2>
+            <ul class="info-list">
+                <li>
+                    <span class="info-label">应用名称</span>
+                    <span class="info-value">Bili-Electron</span>
+                </li>
+                <li>
+                    <span class="info-label">版本号</span>
+                    <span class="info-value">2026.2.0</span>
+                </li>
+                <li>
+                    <span class="info-label">描述</span>
+                    <span class="info-value">B站 Electron 客户端</span>
+                </li>
+                <li>
+                    <span class="info-label">主入口</span>
+                    <span class="info-value">src/main/index.js</span>
+                </li>
+                <li>
+                    <span class="info-label">许可证</span>
+                    <span class="info-value">MIT</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🪟</span>
+                窗口配置
+            </h2>
+            <div class="config-grid">
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">DEFAULT_WIDTH</span>
+                        <span class="config-type">number</span>
+                    </div>
+                    <span class="config-value">1300</span>
+                    <span class="config-desc">窗口默认宽度（像素）</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">DEFAULT_HEIGHT</span>
+                        <span class="config-type">number</span>
+                    </div>
+                    <span class="config-value">750</span>
+                    <span class="config-desc">窗口默认高度（像素）</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">MIN_WIDTH</span>
+                        <span class="config-type">number</span>
+                    </div>
+                    <span class="config-value">800</span>
+                    <span class="config-desc">窗口最小宽度（像素）</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">MIN_HEIGHT</span>
+                        <span class="config-type">number</span>
+                    </div>
+                    <span class="config-value">600</span>
+                    <span class="config-desc">窗口最小高度（像素）</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">BACKGROUND_COLOR</span>
+                        <span class="config-type">string</span>
+                    </div>
+                    <span class="config-value">#ffffff</span>
+                    <span class="config-desc">窗口背景颜色</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🔗</span>
+                URL 配置
+            </h2>
+            <div class="config-grid">
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">BILIBILI_HOME</span>
+                        <span class="config-type">string</span>
+                    </div>
+                    <span class="config-value">https://www.bilibili.com</span>
+                    <span class="config-desc">B站首页地址</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">BILIBILI_DOMAIN</span>
+                        <span class="config-type">string</span>
+                    </div>
+                    <span class="config-value">bilibili.com</span>
+                    <span class="config-desc">B站主域名</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🌐</span>
+                请求头配置
+            </h2>
+            <div class="config-grid">
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">Accept-Language</span>
+                        <span class="config-type">string</span>
+                    </div>
+                    <span class="config-value">zh-CN,zh;q=0.9,en;q=0.8</span>
+                    <span class="config-desc">浏览器接受语言</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">Accept</span>
+                        <span class="config-type">string</span>
+                    </div>
+                    <span class="config-value">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+                    <span class="config-desc">浏览器接受内容类型</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">User-Agent</span>
+                        <span class="config-type">string</span>
+                    </div>
+                    <span class="config-value">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36</span>
+                    <span class="config-desc">浏览器用户代理标识</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">⚙️</span>
+                WebPreferences 配置
+            </h2>
+            <div class="config-grid">
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">nodeIntegration</span>
+                        <span class="config-type">boolean</span>
+                    </div>
+                    <span class="config-value">false</span>
+                    <span class="config-desc">是否启用 Node.js 集成（安全考虑，建议关闭）</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">contextIsolation</span>
+                        <span class="config-type">boolean</span>
+                    </div>
+                    <span class="config-value">true</span>
+                    <span class="config-desc">是否启用上下文隔离（安全考虑，建议开启）</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">webSecurity</span>
+                        <span class="config-type">boolean</span>
+                    </div>
+                    <span class="config-value">true</span>
+                    <span class="config-desc">是否启用同源策略</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">allowRunningInsecureContent</span>
+                        <span class="config-type">boolean</span>
+                    </div>
+                    <span class="config-value">false</span>
+                    <span class="config-desc">是否允许运行不安全内容</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">📋</span>
+                常量配置代码
+            </h2>
+            <pre class="code-block"><span class="comment">// 应用常量配置</span>
+<span class="key">const</span> CONSTANTS = {
+  APP_NAME: <span class="string">'Bili-Electron'</span>,
+  
+  WINDOW: {
+    DEFAULT_WIDTH: <span class="number">1300</span>,
+    DEFAULT_HEIGHT: <span class="number">750</span>,
+    MIN_WIDTH: <span class="number">800</span>,
+    MIN_HEIGHT: <span class="number">600</span>,
+    BACKGROUND_COLOR: <span class="string">'#ffffff'</span>
+  },
+  
+  USER_AGENT: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36...'</span>,
+  
+  URLS: {
+    BILIBILI_HOME: <span class="string">'https://www.bilibili.com'</span>,
+    BILIBILI_DOMAIN: <span class="string">'bilibili.com'</span>
+  },
+  
+  HEADERS: {
+    ACCEPT_LANGUAGE: <span class="string">'zh-CN,zh;q=0.9,en;q=0.8'</span>,
+    ACCEPT: <span class="string">'text/html,application/xhtml+xml...'</span>
+  }
+};</pre>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🚀</span>
+                可用脚本
+            </h2>
+            <div class="config-grid">
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">npm start</span>
+                        <span class="config-type">command</span>
+                    </div>
+                    <span class="config-desc">启动应用程序</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">npm run dev</span>
+                        <span class="config-type">command</span>
+                    </div>
+                    <span class="config-desc">开发模式启动（带调试参数）</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">npm run build</span>
+                        <span class="config-type">command</span>
+                    </div>
+                    <span class="config-desc">构建所有平台版本</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">npm run build:win</span>
+                        <span class="config-type">command</span>
+                    </div>
+                    <span class="config-desc">构建 Windows 版本</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">npm run build:mac</span>
+                        <span class="config-type">command</span>
+                    </div>
+                    <span class="config-desc">构建 macOS 版本</span>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-name">npm run build:linux</span>
+                        <span class="config-type">command</span>
+                    </div>
+                    <span class="config-desc">构建 Linux 版本</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🔧</span>
+                开发依赖
+            </h2>
+            <div style="margin-top: 8px;">
+                <span class="tag primary">electron ^40.6.0</span>
+                <span class="tag primary">electron-builder ^24.9.1</span>
+            </div>
+        </section>
+
+        <footer>
+            <p>Bili-Electron 环境配置文档</p>
+        </footer>
+    </div>
+</body>
+</html>
