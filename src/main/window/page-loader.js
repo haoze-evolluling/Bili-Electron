@@ -98,6 +98,7 @@ class PageLoader {
 
     this.handleWindowOpen();
     this.handleNavigation();
+    this.setupBlurCloseHandler();
   }
 
   showWhenReady() {
