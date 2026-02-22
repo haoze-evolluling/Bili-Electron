@@ -19,7 +19,6 @@ class PageLoader {
       if (WindowConfig.isInternalUrl(url)) {
         const newWindow = new BrowserWindow({
           ...WindowConfig.mainWindowOptions,
-          parent: this.window,
           show: false
         });
 
@@ -30,6 +29,13 @@ class PageLoader {
         const pageLoader = new PageLoader(newWindow);
         pageLoader.setupNewWindow(this.window);
         pageLoader.showWhenReady();
+
+        // 子窗口打开后，30秒后关闭母窗口
+        setTimeout(() => {
+          if (!this.window.isDestroyed()) {
+            this.window.close();
+          }
+        }, 30000);
 
         return { action: 'deny' };
       }
