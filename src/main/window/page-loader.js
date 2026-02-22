@@ -6,6 +6,8 @@ const WindowConfig = require('./window-config');
 class PageLoader {
   constructor(window) {
     this.window = window;
+    this.blurTimer = null;
+    this.BLUR_CLOSE_DELAY = 60000; // 窗口失去焦点60秒后关闭
   }
 
   loadBilibiliHomepage() {
@@ -29,13 +31,6 @@ class PageLoader {
         const pageLoader = new PageLoader(newWindow);
         pageLoader.setupNewWindow(this.window);
         pageLoader.showWhenReady();
-
-        // 子窗口打开后，120秒后关闭母窗口
-        setTimeout(() => {
-          if (!this.window.isDestroyed()) {
-            this.window.close();
-          }
-        }, 120000);
 
         return { action: 'deny' };
       }
@@ -62,6 +57,34 @@ class PageLoader {
 
     this.handleWindowOpen();
     this.handleNavigation();
+    this.setupBlurCloseHandler();
+  }
+
+  setupBlurCloseHandler() {
+    // 窗口失去焦点时启动计时器
+    this.window.on('blur', () => {
+      this.blurTimer = setTimeout(() => {
+        if (!this.window.isDestroyed()) {
+          this.window.close();
+        }
+      }, this.BLUR_CLOSE_DELAY);
+    });
+
+    // 窗口获得焦点时清除计时器
+    this.window.on('focus', () => {
+      if (this.blurTimer) {
+        clearTimeout(this.blurTimer);
+        this.blurTimer = null;
+      }
+    });
+
+    // 窗口关闭时清理计时器
+    this.window.on('closed', () => {
+      if (this.blurTimer) {
+        clearTimeout(this.blurTimer);
+        this.blurTimer = null;
+      }
+    });
   }
 
   setupNewWindow(parentWindow) {
