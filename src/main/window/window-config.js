@@ -9,6 +9,7 @@ const WindowConfig = {
     title: CONSTANTS.APP_NAME,
     icon: path.join(__dirname, '..', '..', '..', 'logo', 'bilibili_icon_198297.png'),
     autoHideMenuBar: true,
+    titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
