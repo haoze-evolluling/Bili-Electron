@@ -1,5 +1,5 @@
 // 主进程入口，负责应用生命周期管理和窗口创建
-const { app, BrowserWindow, session } = require('electron');
+const { app, BrowserWindow, session, ipcMain } = require('electron');
 const CONSTANTS = require('../common/constants');
 const WindowConfig = require('./window/window-config');
 const PageLoader = require('./window/page-loader');
@@ -32,9 +32,26 @@ function setupRequestHeaders() {
   });
 }
 
+function setupIpcHandlers() {
+  ipcMain.on('close-window', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win && !win.isDestroyed()) {
+      win.close();
+    }
+  });
+
+  ipcMain.on('minimize-window', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win && !win.isDestroyed()) {
+      win.minimize();
+    }
+  });
+}
+
 function setupAppEvents() {
   app.whenReady().then(() => {
     setupRequestHeaders();
+    setupIpcHandlers();
     createWindow();
 
     app.on('activate', () => {

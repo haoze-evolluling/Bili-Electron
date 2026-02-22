@@ -30,12 +30,12 @@ class PageLoader {
         pageLoader.setupNewWindow(this.window);
         pageLoader.showWhenReady();
 
-        // 子窗口打开后，30秒后关闭母窗口
+        // 子窗口打开后，120秒后关闭母窗口
         setTimeout(() => {
           if (!this.window.isDestroyed()) {
             this.window.close();
           }
-        }, 30000);
+        }, 120000);
 
         return { action: 'deny' };
       }
