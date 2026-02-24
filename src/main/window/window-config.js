@@ -1,8 +1,7 @@
-// 窗口配置管理，定义窗口选项
 const path = require('path');
 const CONSTANTS = require('../../common/constants');
 
-const WindowConfig = {
+module.exports = {
   mainWindowOptions: {
     width: CONSTANTS.WINDOW.DEFAULT_WIDTH,
     height: CONSTANTS.WINDOW.DEFAULT_HEIGHT,
@@ -23,9 +22,5 @@ const WindowConfig = {
 
   userAgent: CONSTANTS.USER_AGENT,
 
-  isInternalUrl(url) {
-    return url.includes(CONSTANTS.URLS.BILIBILI_DOMAIN);
-  }
+  isInternalUrl: (url) => url.includes(CONSTANTS.URLS.BILIBILI_DOMAIN)
 };
-
-module.exports = WindowConfig;

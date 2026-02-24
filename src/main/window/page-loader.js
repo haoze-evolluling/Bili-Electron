@@ -1,4 +1,3 @@
-// 页面加载管理器，处理窗口导航和新窗口打开
 const { shell, BrowserWindow } = require('electron');
 const CONSTANTS = require('../../common/constants');
 const WindowConfig = require('./window-config');
@@ -22,9 +21,7 @@ class PageLoader {
           show: false
         });
 
-        newWindow.loadURL(url, {
-          userAgent: WindowConfig.userAgent
-        });
+        newWindow.loadURL(url, { userAgent: WindowConfig.userAgent });
 
         const pageLoader = new PageLoader(newWindow);
         pageLoader.setupNewWindow(this.window);
@@ -40,19 +37,16 @@ class PageLoader {
 
   handleNavigation() {
     this.window.webContents.on('will-navigate', (event, url) => {
-      if (WindowConfig.isInternalUrl(url)) {
-        return;
+      if (!WindowConfig.isInternalUrl(url)) {
+        event.preventDefault();
+        shell.openExternal(url);
       }
-      
-      event.preventDefault();
-      shell.openExternal(url);
     });
   }
 
   setupWindowEvents() {
     this.window.setMenuBarVisibility(false);
     this.window.setAutoHideMenuBar(true);
-
     this.handleWindowOpen();
     this.handleNavigation();
   }
@@ -62,10 +56,8 @@ class PageLoader {
     const [x, y] = parentWindow.getPosition();
     this.window.setSize(width, height);
     this.window.setPosition(x, y);
-
     this.window.setMenuBarVisibility(false);
     this.window.setAutoHideMenuBar(true);
-
     this.handleWindowOpen();
     this.handleNavigation();
   }
@@ -73,7 +65,6 @@ class PageLoader {
   showWhenReady() {
     this.window.once('ready-to-show', () => {
       this.window.show();
-      
       if (process.argv.includes('--dev')) {
         this.window.webContents.openDevTools();
       }
