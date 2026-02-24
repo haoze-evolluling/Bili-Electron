@@ -132,18 +132,7 @@ window.addEventListener('DOMContentLoaded', () => {
     </svg>
   `;
   backBtn.addEventListener('click', () => {
-    if (pageHistory.length > 0) {
-      const previousState = pageHistory.pop();
-      // 恢复页面状态
-      history.back();
-      // 等待页面加载完成后恢复滚动位置
-      setTimeout(() => {
-        window.scrollTo(previousState.scrollX, previousState.scrollY);
-      }, 100);
-    } else {
-      // 如果没有历史记录，使用浏览器默认返回
-      history.back();
-    }
+    history.back();
   });
   document.body.appendChild(backBtn);
 
