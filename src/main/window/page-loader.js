@@ -1,4 +1,4 @@
-const { shell, BrowserWindow } = require('electron');
+const { shell } = require('electron');
 const CONSTANTS = require('../../common/constants');
 const WindowConfig = require('./window-config');
 
@@ -16,17 +16,7 @@ class PageLoader {
   handleWindowOpen() {
     this.window.webContents.setWindowOpenHandler(({ url }) => {
       if (WindowConfig.isInternalUrl(url)) {
-        const newWindow = new BrowserWindow({
-          ...WindowConfig.mainWindowOptions,
-          show: false
-        });
-
-        newWindow.loadURL(url, { userAgent: WindowConfig.userAgent });
-
-        const pageLoader = new PageLoader(newWindow);
-        pageLoader.setupNewWindow(this.window);
-        pageLoader.showWhenReady();
-
+        this.window.loadURL(url, { userAgent: WindowConfig.userAgent });
         return { action: 'deny' };
       }
 
@@ -45,17 +35,6 @@ class PageLoader {
   }
 
   setupWindowEvents() {
-    this.window.setMenuBarVisibility(false);
-    this.window.setAutoHideMenuBar(true);
-    this.handleWindowOpen();
-    this.handleNavigation();
-  }
-
-  setupNewWindow(parentWindow) {
-    const [width, height] = parentWindow.getSize();
-    const [x, y] = parentWindow.getPosition();
-    this.window.setSize(width, height);
-    this.window.setPosition(x, y);
     this.window.setMenuBarVisibility(false);
     this.window.setAutoHideMenuBar(true);
     this.handleWindowOpen();
