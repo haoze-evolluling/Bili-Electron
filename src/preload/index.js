@@ -216,6 +216,10 @@ window.addEventListener('DOMContentLoaded', () => {
     minimizeBtn.classList.toggle('expanded', isExpanded);
     closeBtn.classList.toggle('expanded', isExpanded);
   });
+  mainBtn.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    location.href = 'https://www.bilibili.com';
+  });
   document.body.appendChild(mainBtn);
 
   // 返回按钮
