@@ -28,7 +28,6 @@ const scrollBarCSS = `
 const closeButtonCSS = `
   .electron-control-btn {
     position: fixed !important;
-    bottom: 36px !important;
     width: 32px !important;
     height: 32px !important;
     border-radius: 50% !important;
@@ -39,10 +38,17 @@ const closeButtonCSS = `
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .electron-control-btn.visible {
+    opacity: 1 !important;
+    pointer-events: auto !important;
   }
   .electron-control-btn:hover {
     transform: scale(1.15) !important;
+    animation: bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   }
   .electron-control-btn:active {
     transform: scale(0.85) !important;
@@ -52,14 +58,79 @@ const closeButtonCSS = `
     height: 16px !important;
     fill: white !important;
   }
+  
+  @keyframes bounce {
+    0%, 100% { transform: scale(1.15); }
+    50% { transform: scale(1.25); }
+  }
+  
+  @keyframes mainBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  #electron-main-btn {
+    bottom: 36px !important;
+    right: 36px !important;
+    width: 52px !important;
+    height: 52px !important;
+    background: linear-gradient(135deg, #fb7299, #fc8bab) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    box-shadow: 0 4px 12px rgba(251, 114, 153, 0.4) !important;
+  }
+  #electron-main-btn:hover {
+    animation: mainBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+  #electron-main-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+    transition: transform 0.3s ease !important;
+  }
+  #electron-main-btn.active svg {
+    transform: rotate(45deg) !important;
+  }
+  
   #electron-back-btn {
-    right: 56px !important;
+    bottom: 36px !important;
+    right: 36px !important;
+  }
+  #electron-refresh-btn {
+    bottom: 36px !important;
+    right: 36px !important;
   }
   #electron-minimize-btn {
-    right: 96px !important;
+    bottom: 36px !important;
+    right: 36px !important;
   }
   #electron-close-btn {
-    right: 16px !important;
+    bottom: 36px !important;
+    right: 36px !important;
+  }
+  
+  #electron-back-btn.expanded {
+    transform: translate(0px, -80px) !important;
+  }
+  #electron-back-btn.expanded:hover {
+    transform: translate(0px, -80px) scale(1.15) !important;
+  }
+  #electron-refresh-btn.expanded {
+    transform: translate(-40px, -69.28px) !important;
+  }
+  #electron-refresh-btn.expanded:hover {
+    transform: translate(-40px, -69.28px) scale(1.15) !important;
+  }
+  #electron-minimize-btn.expanded {
+    transform: translate(-69.28px, -40px) !important;
+  }
+  #electron-minimize-btn.expanded:hover {
+    transform: translate(-69.28px, -40px) scale(1.15) !important;
+  }
+  #electron-close-btn.expanded {
+    transform: translate(-80px, 0px) !important;
+  }
+  #electron-close-btn.expanded:hover {
+    transform: translate(-80px, 0px) scale(1.15) !important;
   }
 `;
 
@@ -122,6 +193,31 @@ window.addEventListener('click', (e) => {
 window.addEventListener('DOMContentLoaded', () => {
   console.log('BiliBili Electron Client Loaded');
 
+  let isExpanded = false;
+
+  // 主按钮
+  const mainBtn = document.createElement('button');
+  mainBtn.id = 'electron-main-btn';
+  mainBtn.className = 'electron-control-btn';
+  mainBtn.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+    </svg>
+  `;
+  mainBtn.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+    mainBtn.classList.toggle('active', isExpanded);
+    backBtn.classList.toggle('visible', isExpanded);
+    refreshBtn.classList.toggle('visible', isExpanded);
+    minimizeBtn.classList.toggle('visible', isExpanded);
+    closeBtn.classList.toggle('visible', isExpanded);
+    backBtn.classList.toggle('expanded', isExpanded);
+    refreshBtn.classList.toggle('expanded', isExpanded);
+    minimizeBtn.classList.toggle('expanded', isExpanded);
+    closeBtn.classList.toggle('expanded', isExpanded);
+  });
+  document.body.appendChild(mainBtn);
+
   // 返回按钮
   const backBtn = document.createElement('button');
   backBtn.id = 'electron-back-btn';
@@ -136,6 +232,21 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   document.body.appendChild(backBtn);
 
+  // 刷新按钮
+  const refreshBtn = document.createElement('button');
+  refreshBtn.id = 'electron-refresh-btn';
+  refreshBtn.className = 'electron-control-btn';
+  refreshBtn.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+    </svg>
+  `;
+  refreshBtn.addEventListener('click', () => {
+    location.reload();
+  });
+  document.body.appendChild(refreshBtn);
+
+  // 最小化按钮
   const minimizeBtn = document.createElement('button');
   minimizeBtn.id = 'electron-minimize-btn';
   minimizeBtn.className = 'electron-control-btn';
@@ -149,6 +260,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   document.body.appendChild(minimizeBtn);
 
+  // 关闭按钮
   const closeBtn = document.createElement('button');
   closeBtn.id = 'electron-close-btn';
   closeBtn.className = 'electron-control-btn';
