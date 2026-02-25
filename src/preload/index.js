@@ -111,17 +111,11 @@ const closeButtonCSS = `
   #electron-back-btn.expanded {
     transform: translate(0px, -80px) !important;
   }
-  #electron-back-btn.expanded:hover {
-    transform: translate(0px, -80px) scale(1.15) !important;
-  }
   #electron-back-btn.expanded:active {
     transform: translate(0px, -80px) scale(0.85) !important;
   }
   #electron-refresh-btn.expanded {
     transform: translate(-40px, -69.28px) !important;
-  }
-  #electron-refresh-btn.expanded:hover {
-    transform: translate(-40px, -69.28px) scale(1.15) !important;
   }
   #electron-refresh-btn.expanded:active {
     transform: translate(-40px, -69.28px) scale(0.85) !important;
@@ -129,17 +123,11 @@ const closeButtonCSS = `
   #electron-minimize-btn.expanded {
     transform: translate(-69.28px, -40px) !important;
   }
-  #electron-minimize-btn.expanded:hover {
-    transform: translate(-69.28px, -40px) scale(1.15) !important;
-  }
   #electron-minimize-btn.expanded:active {
     transform: translate(-69.28px, -40px) scale(0.85) !important;
   }
   #electron-close-btn.expanded {
     transform: translate(-80px, 0px) !important;
-  }
-  #electron-close-btn.expanded:hover {
-    transform: translate(-80px, 0px) scale(1.15) !important;
   }
   #electron-close-btn.expanded:active {
     transform: translate(-80px, 0px) scale(0.85) !important;
