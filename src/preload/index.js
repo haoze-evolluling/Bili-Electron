@@ -127,10 +127,10 @@ const closeButtonCSS = `
     transform: translate(-69.28px, -40px) scale(0.85) !important;
   }
   #electron-close-btn.expanded {
-    transform: translate(-80px, 0px) !important;
+    transform: translate(-79.98px, -1.4px) !important;
   }
   #electron-close-btn.expanded:active {
-    transform: translate(-80px, 0px) scale(0.85) !important;
+    transform: translate(-79.98px, -1.4px) scale(0.85) !important;
   }
 `;
 
