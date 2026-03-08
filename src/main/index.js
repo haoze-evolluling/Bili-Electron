@@ -1,5 +1,5 @@
 // 主进程入口，负责应用生命周期管理和窗口创建
-const { app, BrowserWindow, session, ipcMain } = require('electron');
+const { app, BrowserWindow, session, ipcMain, globalShortcut } = require('electron');
 const CONSTANTS = require('../common/constants');
 const WindowConfig = require('./window/window-config');
 const PageLoader = require('./window/page-loader');
@@ -8,6 +8,7 @@ const PageLoader = require('./window/page-loader');
 app.commandLine.appendSwitch('dns-over-https', 'https://223.5.5.5/dns-query');
 
 let mainWindow;
+let isBossKeyHidden = false;
 
 function createWindow() {
   mainWindow = new BrowserWindow(WindowConfig.mainWindowOptions);
@@ -48,10 +49,32 @@ function setupIpcHandlers() {
   });
 }
 
+function setupBossKey() {
+  const ret = globalShortcut.register('Alt+Z', () => {
+    if (!mainWindow || mainWindow.isDestroyed()) return;
+    
+    if (isBossKeyHidden) {
+      mainWindow.show();
+      mainWindow.setOpacity(1);
+      mainWindow.focus();
+      isBossKeyHidden = false;
+    } else {
+      mainWindow.setOpacity(0);
+      mainWindow.hide();
+      isBossKeyHidden = true;
+    }
+  });
+
+  if (!ret) {
+    console.error('老板键注册失败：Alt+Z 快捷键可能被其他应用占用');
+  }
+}
+
 function setupAppEvents() {
   app.whenReady().then(() => {
     setupRequestHeaders();
     setupIpcHandlers();
+    setupBossKey();
     createWindow();
 
     app.on('activate', () => {
@@ -62,9 +85,14 @@ function setupAppEvents() {
   });
 
   app.on('window-all-closed', () => {
+    globalShortcut.unregisterAll();
     if (process.platform !== 'darwin') {
       app.quit();
     }
+  });
+
+  app.on('will-quit', () => {
+    globalShortcut.unregisterAll();
   });
 }
 
